@@ -1,0 +1,10 @@
+---
+- name: Manually back up a file before modifying
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Create a backup copy with timestamp
+      command: cp /etc/myapp/config.txt /etc/myapp/config.txt.bak_{{ ansible_date_time.date }}_{{ ansible_date_time.time }}
+      args:
+        removes: /etc/myapp/config.txt.bak_{{ ansible_date_time.date }}_{{ ansible_date_time.time }}

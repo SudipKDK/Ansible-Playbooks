@@ -1,0 +1,33 @@
+Ansible Ad-Hoc Commands 
+
+Ad-Hoc commands are quick, one-line commands to perform tasks on remote servers
+without writing a playbook.
+
+Syntax:
+
+ansible <host-pattern> -m <module> -a "<module-arguments>" [options]
+<host-pattern> : host/group from inventory (e.g., all)
+-m <module>    : module to use (ping, apt, service, copy, shell, etc.)
+-a "<args>"    : arguments for the module
+-b             : run with sudo/root privileges
+
+2. Common Examples:
+
+1. Ping all hosts
+ansible all -m ping
+
+2. all a package (Ubuntu/Debian)
+ansible all -m apt -a "name=nginx state=present" -b
+
+3. Start a service
+ansible all -m service -a "name=nginx state=started enabled=yes" -b
+
+4. Run shell commands
+ansible all -m shell -a "uptime"
+ansible all -m shell -a "df -h"
+
+5. Download a file from internet
+ansible all -m get_url -a "url=https://example.com/file.txt dest=/tmp/file.txt" -b
+
+6. Reboot remote hosts
+ansible all -m reboot -b

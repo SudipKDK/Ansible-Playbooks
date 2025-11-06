@@ -1,0 +1,17 @@
+---
+- name: Enable firewall and allow Nginx
+  hosts: all
+  become: true
+  tasks: 
+    - name: Enable Nginx service in firewalld
+      firewalld:
+        service: nginx
+        permanent: true
+        state: enabled
+        immediate: yes
+
+    - name: Reload firewalld to apply changes
+      service:
+        name: firewalld
+        state: reloaded
+

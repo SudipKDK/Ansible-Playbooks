@@ -1,0 +1,13 @@
+---
+- name: delete user
+  hosts: all
+  become: true
+  tasks:
+    - name: delete user
+      user:
+        name: ramsesh
+        shell: /bin/bash
+        group: qa
+        state: absent
+        remove: yes
+

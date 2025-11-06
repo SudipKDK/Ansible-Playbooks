@@ -1,0 +1,16 @@
+---
+- name: Cron setup
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Add cron job to run test script
+      cron:
+        name: "run test script"
+        minute: "30"
+        hour: "18"
+        day: "15"
+        month: "*"
+        user: sudip
+        job: /home/sudip/script.sh
+

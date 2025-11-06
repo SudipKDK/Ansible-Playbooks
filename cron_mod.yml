@@ -1,0 +1,11 @@
+---
+- name: remove cron
+  hosts: all
+  become: true
+
+  tasks:
+   - name: remove cronjob
+     cron:
+       name: run test script
+       state: absent
+       user: sudip

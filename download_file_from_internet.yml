@@ -1,0 +1,17 @@
+---
+- name: Download file from the internet to remote server
+  hosts: all
+  become: true
+
+  vars:
+    file_url: "https://download.docker.com/linux/ubuntu/dists/focal/pool/stable/amd64/docker-ce_24.0.6~3-0~ubuntu-focal_amd64.deb"   
+    dest_path: "/home/sudip/docker.deb"          
+
+  tasks:
+    - name: Download file from URL
+      get_url:
+        url: "{{ file_url }}"
+        dest: "{{ dest_path }}"
+        mode: 0644        
+        owner: sudip        
+        group: sudip         

@@ -1,0 +1,14 @@
+---
+- name: copy file in remote server
+  hosts: all
+  become: true
+
+  tasks:
+    - name: copy file
+      copy:
+        src: /home/sudip/hello.txt
+        dest: /home/sudip/copy/
+        owner: sudip
+        group: sudip
+        mode: 0755
+        backup: yes  # takes backup

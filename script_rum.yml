@@ -1,0 +1,18 @@
+---
+- name: Run script on remote hosts
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Ensure script is executable
+      file:
+        path: /home/sudip/script.sh
+        mode: '0755'
+        state: file
+
+    - name: Run script
+      shell: /home/sudip/script.sh >> test.log
+      args:
+        chdir: /home/sudip/log
+        creates: test.log
+

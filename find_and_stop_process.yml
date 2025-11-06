@@ -1,0 +1,20 @@
+---
+- name: Find and stop a process on remote server
+  hosts: all
+  become: true
+  vars:
+    process_name: my_app             # name of the process to stop
+
+  tasks:
+    - name: Check if process is running
+      shell: pgrep -f "{{ process_name }}"
+      register: process_pid
+      ignore_errors: true
+
+    - name: Display running process PID(s)
+      debug:
+        msg: "Process '{{ process_name }}' running with PID(s): {{ process_pid.stdout_lines }}"
+
+    - name: Stop the process if running
+      shell: kill -9 {{ process_pid.stdout }}
+      when: process_pid.stdout != ""

@@ -1,0 +1,13 @@
+---
+- name: create user
+  hosts: all
+  become: true
+
+  tasks:
+    - name: user creation
+      user: 
+        name: ramsesh
+        comment: new user for qa team
+        shell: /bin/bash
+        groups: qa
+        create_home: yes
