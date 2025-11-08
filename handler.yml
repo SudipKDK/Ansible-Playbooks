@@ -1,0 +1,24 @@
+---
+- name: Install and configure Apache
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Install Apache
+      apt:
+        name: apache2
+        state: present
+        update_cache: yes
+
+    - name: Copy Apache config file
+      copy:
+        src: apache.conf
+        dest: /etc/apache2/sites-available/000-default.conf
+      notify: Restart Apache
+
+  handlers:
+    - name: Restart Apache
+      service:
+        name: apache2
+        state: restarted
+

@@ -1,0 +1,17 @@
+---
+- name: Conditional example
+  hosts: all
+  become: true
+
+  vars:
+    package_name: "{{ 'apache2' if ansible_os_family == 'Debian' else 'httpd' }}"
+    install_package: true
+
+  tasks:
+    - name: Install web server
+      package:
+        name: "{{ package_name }}"
+        state: present
+      when: install_package
+      tags: install
+

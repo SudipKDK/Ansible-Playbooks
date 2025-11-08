@@ -1,0 +1,27 @@
+---
+- name: loop examples
+  hosts: serverA
+  become: true
+
+  tasks:
+    - name: create users
+      user:
+        name: "{{ item }}"
+        comment: new user added in qa
+        shell: /bin/bash
+        group: dev
+      loop:
+        - raja
+        - raj
+        - rajesh
+      tags: c-user
+
+    - name: start service
+      service:
+        name: "{{ item }}"
+        state: started
+        enabled: true
+      loop:
+        - nginx
+        - docker
+      tags: start_services

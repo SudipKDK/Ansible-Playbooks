@@ -1,0 +1,20 @@
+---
+- name: install docker
+  hosts: all
+  become: true
+
+  tasks:
+    - name: update apt pack
+      apt:
+        update_cache: yes
+    - name: install docker
+      apt: 
+        name: docker.io
+        state: present
+      tags: i-docker  
+    - name: start and enable docker
+      service:
+        name: docker
+        state: started
+        enabled: yes
+      tags: ss-docker

@@ -1,0 +1,42 @@
+---
+- name: Install and start Apache Web Server
+  hosts: all
+  become: true
+
+  vars:
+    package_name: apache2
+    service_name: apache2
+
+  tasks:
+    - name: Install Apache
+      apt:
+        name: "{{ package_name }}"
+        state: present
+        update_cache: yes
+      tags: install
+
+    - name: Start and enable Apache service
+      service:
+        name: "{{ service_name }}"
+        state: started
+        enabled: yes
+      tags: start
+
+    - name: Display Apache version
+      command: apache2 -v
+      register: apache_version
+      tags: check
+
+    - name: Show Apache version
+      debug:
+        var: apache_version.stdout
+      tags: check
+
+
+
+# ansible variable can in used in inventory and its very usefull
+# eg
+# serverA ansible_host = 192.168.225.123
+# this above line specifies id as serverA 
+# ansible serverA -m ping -- this ping the server where serverA is assigned in inventory
+# 
