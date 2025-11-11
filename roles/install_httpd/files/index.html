@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Intro to Ansible — Simple Page</title>
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#94a3b8;--text:#e6eef6}
+    body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;margin:0;background:linear-gradient(180deg,#071027 0%, #0b1220 100%);color:var(--text);line-height:1.6}
+    header{padding:2rem;text-align:center}
+    h1{margin:0;font-size:2rem}
+    p.lead{color:var(--muted);margin-top:.5rem}
+    main{max-width:900px;margin:1rem auto;padding:1.25rem}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);padding:1rem;border-radius:12px;box-shadow:0 6px 20px rgba(2,6,23,0.6)}
+    section+section{margin-top:1rem}
+    h2{color:var(--accent);margin-bottom:.3rem}
+    ul{margin:0 0 0 1.2rem}
+    pre{background:#00121a;padding:1rem;border-radius:8px;overflow:auto;color:#cfeef8}
+    code{font-family:SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:0.95rem}
+    footer{max-width:900px;margin:1rem auto;color:var(--muted);font-size:.9rem;text-align:center}
+    .btn{display:inline-block;padding:.45rem .7rem;border-radius:8px;background:var(--accent);color:#042b33;text-decoration:none;font-weight:600;margin-top:.5rem}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Quick Intro to Ansible</h1>
+    <p class="lead">A brief, beginner-friendly overview and tiny examples to get you started.</p>
+  </header>
+
+  <main>
+    <div class="card">
+      <section>
+        <h2>What is Ansible?</h2>
+        <p>Ansible is an open-source automation tool used for configuration management, application deployment, task automation, and orchestration. It uses simple, human-readable <em>YAML</em> files called <strong>playbooks</strong> to describe automation tasks.</p>
+      </section>
+
+      <section>
+        <h2>Why use Ansible?</h2>
+        <ul>
+          <li>Agentless — communicates over SSH (no agent installation required).</li>
+          <li>Declarative — describe the desired state; Ansible makes it so.</li>
+          <li>Idempotent — safe to run multiple times without unintended side effects.</li>
+          <li>Fast to learn — playbooks use simple YAML and many built-in modules.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Small example — inventory and playbook</h2>
+        <p>Inventory (hosts file):</p>
+        <pre><code># inventory/hosts
+[web]
+web1.example.com
+web2.example.com
+
+[db]
+db1.example.com
+</code></pre>
+
+        <p>Playbook: install Nginx and start it</p>
+        <pre><code>---
+- name: Install and start Nginx on web hosts
+  hosts: web
+  become: yes
+  tasks:
+    - name: Ensure Nginx is installed
+      package:
+        name: nginx
+        state: present
+
+    - name: Ensure Nginx service is running
+      service:
+        name: nginx
+        state: started
+        enabled: true
+</code></pre>
+
+        <p>Run the playbook:</p>
+        <pre><code>ansible-playbook -i inventory/hosts playbooks/install-nginx.yml</code></pre>
+      </section>
+
+      <section>
+        <h2>Common Commands</h2>
+        <ul>
+          <li><code>ansible all -m ping -i inventory/hosts</code> — check connectivity.</li>
+          <li><code>ansible-playbook playbook.yml -i inventory/hosts --check</code> — run in dry-run mode.</li>
+          <li><code>ansible-vault encrypt secrets.yml</code> — encrypt sensitive data.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Tips & Best Practices</h2>
+        <ul>
+          <li>Keep inventory separate from playbooks.</li>
+          <li>Use roles for reusable, organized code (use <code>ansible-galaxy init</code>).</li>
+          <li>Protect secrets with Ansible Vault.</li>
+          <li>Test with <code>--check</code> and use CI to lint playbooks (<code>ansible-lint</code>).</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Further Learning</h2>
+        <p>Try creating a simple role that installs a package and deploys a configuration file. When you're ready, explore dynamic inventories, custom modules, and integrating Ansible with CI/CD pipelines.</p>
+        <a class="btn" href="#" onclick="alert('Try copying the examples and running them on a test VM with SSH access!')">Try the examples</a>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    Created for you — tweak, copy, and use for study or demos. ❤️
+  </footer>
+
+</body>
+</html>
+

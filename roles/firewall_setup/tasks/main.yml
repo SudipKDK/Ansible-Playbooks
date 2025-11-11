@@ -1,0 +1,9 @@
+---
+- name: enable HTTP service in firewall
+  ansible.posix.firewalld:
+    service: "{{ service }}"
+    state: enabled
+    permanent: true
+  become: true
+  notify: reload  
+

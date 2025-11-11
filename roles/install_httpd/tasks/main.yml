@@ -1,0 +1,23 @@
+#SPDX-License-Identifier: MIT-0
+---
+- name: install gttpd
+  yum:
+    name: "{{ services }}"
+    state: present
+  become: true
+  
+- name: place html ifle
+  copy:
+    src: index.html
+    dest: /var/www/html/index.html
+  become: true
+
+- name: start the service
+  service: 
+    name: "{{ services }}"
+    state: started
+    enabled: true
+  become: true
+
+
+
